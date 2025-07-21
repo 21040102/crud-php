@@ -1,8 +1,8 @@
 <?php
 $host = 'mysql.railway.internal';
 $user = 'root';
-$password = 'sJmqBEkdSNzjzfxwxuGwIwjluJmTdSsB';
-$db = 'railway'; // o 'ferrocarril' si cambiaste el nombre
+$password = 'sJmqBEkdSNzjfzxwxuGwIwjluJmTdSsB';
+$db = 'railway';
 
 $conn = mysqli_connect($host, $user, $password, $db);
 
