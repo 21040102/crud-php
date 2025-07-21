@@ -2,7 +2,7 @@
 <html>
 <head>
 	<title>Homepage</title>
-	<link href="style.css" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -25,8 +25,5 @@
 		echo "<a href='login.php'>Login</a> | <a href='register.php'>Register</a>";
 	}
 	?>
-	<div id="footer">
-		Created by <a href="http://blog.chapagain.com.np" title="Mukesh Chapagain">Mukesh Chapagain</a>
-	</div>
 </body>
 </html>

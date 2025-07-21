@@ -1,0 +1,7 @@
+*.sql
+*.zip
+*.rar
+*.md
+node_modules
+vendor
+.git

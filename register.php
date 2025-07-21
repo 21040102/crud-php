@@ -1,60 +1,69 @@
+<!DOCTYPE html>
 <html>
 <head>
-	<title>Register</title>
+	<title>Registro</title>
 </head>
-
 <body>
-<a href="index.php">Home</a> <br />
+
+<a href="index.php">Inicio</a> <br />
+
 <?php
 include("connection.php");
 
-if(isset($_POST['submit'])) {
-	$name = $_POST['name'];
-	$email = $_POST['email'];
-	$user = $_POST['username'];
-	$pass = $_POST['password'];
+if (isset($_POST['submit'])) {
+	$name = trim($_POST['name']);
+	$email = trim($_POST['email']);
+	$user = trim($_POST['username']);
+	$pass = trim($_POST['password']);
 
-	if($user == "" || $pass == "" || $name == "" || $email == "") {
-		echo "All fields should be filled. Either one or many fields are empty.";
+	if ($user == "" || $pass == "" || $name == "" || $email == "") {
+		echo "Todos los campos deben estar llenos. Uno o más están vacíos.";
 		echo "<br/>";
-		echo "<a href='register.php'>Go back</a>";
+		echo "<a href='register.php'>Volver</a>";
 	} else {
-		mysqli_query($mysqli, "INSERT INTO login(name, email, username, password) VALUES('$name', '$email', '$user', md5('$pass'))")
-			or die("Could not execute the insert query.");
-			
-		echo "Registration successfully";
-		echo "<br/>";
-		echo "<a href='login.php'>Login</a>";
+		$query = "INSERT INTO login (name, email, username, password) 
+		          VALUES ('$name', '$email', '$user', md5('$pass'))";
+
+		if (mysqli_query($conn, $query)) {
+			echo "✅ Registro exitoso";
+			echo "<br/>";
+			echo "<a href='login.php'>Ir a iniciar sesión</a>";
+		} else {
+			echo "❌ Error al registrar: " . mysqli_error($conn);
+		}
 	}
 } else {
 ?>
-	<p><font size="+2">Register</font></p>
+
+	<h2>Registro de nuevo usuario</h2>
 	<form name="form1" method="post" action="">
 		<table width="75%" border="0">
 			<tr> 
-				<td width="10%">Full Name</td>
-				<td><input type="text" name="name"></td>
+				<td width="10%">Nombre completo</td>
+				<td><input type="text" name="name" required></td>
 			</tr>
 			<tr> 
 				<td>Email</td>
-				<td><input type="text" name="email"></td>
+				<td><input type="email" name="email" required></td>
 			</tr>			
 			<tr> 
-				<td>Username</td>
-				<td><input type="text" name="username"></td>
+				<td>Usuario</td>
+				<td><input type="text" name="username" required></td>
 			</tr>
 			<tr> 
-				<td>Password</td>
-				<td><input type="password" name="password"></td>
+				<td>Contraseña</td>
+				<td><input type="password" name="password" required></td>
 			</tr>
 			<tr> 
 				<td>&nbsp;</td>
-				<td><input type="submit" name="submit" value="Submit"></td>
+				<td><input type="submit" name="submit" value="Registrarse"></td>
 			</tr>
 		</table>
 	</form>
+
 <?php
 }
 ?>
+
 </body>
 </html>

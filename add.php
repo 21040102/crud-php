@@ -1,55 +1,60 @@
 <?php session_start(); ?>
 
 <?php
-if(!isset($_SESSION['valid'])) {
+if (!isset($_SESSION['valid'])) {
 	header('Location: login.php');
 }
 ?>
 
-<html>
+<!DOCTYPE html>
+<html lang="es">
 <head>
-	<title>Add Data</title>
+	<meta charset="UTF-8">
+	<title>Añadir Producto</title>
+	<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-<?php
-//including the database connection file
-include_once("connection.php");
+	<a href="index.php">Inicio</a> | <a href="view.php">Ver Productos</a> | <a href="logout.php">Cerrar sesión</a>
 
-if(isset($_POST['Submit'])) {	
-	$name = $_POST['name'];
-	$qty = $_POST['qty'];
-	$price = $_POST['price'];
-	$loginId = $_SESSION['id'];
-		
-	// checking empty fields
-	if(empty($name) || empty($qty) || empty($price)) {
-				
-		if(empty($name)) {
-			echo "<font color='red'>Name field is empty.</font><br/>";
+	<?php
+	// Incluyendo el archivo de conexión
+	include_once("connection.php");
+
+	if (isset($_POST['Submit'])) {
+		$name = $_POST['name'];
+		$qty = $_POST['qty'];
+		$price = $_POST['price'];
+		$loginId = $_SESSION['id'];
+
+		// Verificar campos vacíos
+		if (empty($name) || empty($qty) || empty($price)) {
+
+			if (empty($name)) {
+				echo "<p style='color: red;'>El campo 'Nombre' está vacío.</p>";
+			}
+			if (empty($qty)) {
+				echo "<p style='color: red;'>El campo 'Cantidad' está vacío.</p>";
+			}
+			if (empty($price)) {
+				echo "<p style='color: red;'>El campo 'Precio' está vacío.</p>";
+			}
+
+			echo "<br/><a href='javascript:self.history.back();'>Volver</a>";
+
+		} else {
+			// Insertar en la base de datos
+			$result = mysqli_query($conn, "INSERT INTO products(name, qty, price, login_id) 
+										   VALUES('$name','$qty','$price', '$loginId')");
+
+			if ($result) {
+				echo "<p style='color: #1db954;'>✅ Producto añadido con éxito.</p>";
+				echo "<br/><a href='view.php'>Ver productos</a>";
+			} else {
+				echo "<p style='color: red;'>❌ Error al insertar: " . mysqli_error($conn) . "</p>";
+			}
 		}
-		
-		if(empty($qty)) {
-			echo "<font color='red'>Quantity field is empty.</font><br/>";
-		}
-		
-		if(empty($price)) {
-			echo "<font color='red'>Price field is empty.</font><br/>";
-		}
-		
-		//link to the previous page
-		echo "<br/><a href='javascript:self.history.back();'>Go Back</a>";
-	} else { 
-		// if all the fields are filled (not empty) 
-			
-		//insert data to database	
-		$result = mysqli_query($mysqli, "INSERT INTO products(name, qty, price, login_id) VALUES('$name','$qty','$price', '$loginId')");
-		
-		//display success message
-		echo "<font color='green'>Data added successfully.";
-		echo "<br/><a href='view.php'>View Result</a>";
 	}
-}
-?>
+	?>
 </body>
 </html>

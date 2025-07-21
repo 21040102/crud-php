@@ -1,23 +1,12 @@
 <?php
-/*
-// mysql_connect("database-host", "username", "password")
-$conn = mysql_connect("localhost","root","root") 
-			or die("cannot connected");
+$host = 'localhost';
+$user = 'root';
+$password = '';
+$db = 'test2';
 
-// mysql_select_db("database-name", "connection-link-identifier")
-@mysql_select_db("test2",$conn);
-*/
+$conn = mysqli_connect($host, $user, $password, $db);
 
-/**
- * mysql_connect is deprecated
- * using mysqli_connect instead
- */
-
-$databaseHost = 'localhost';
-$databaseName = 'test2';
-$databaseUsername = 'root';
-$databasePassword = 'root';
-
-$mysqli = mysqli_connect($databaseHost, $databaseUsername, $databasePassword, $databaseName); 
-	
+if (!$conn) {
+    die("Conexión fallida: " . mysqli_connect_error());
+}
 ?>

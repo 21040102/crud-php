@@ -1,86 +1,86 @@
 <?php session_start(); ?>
 
 <?php
-if(!isset($_SESSION['valid'])) {
+if (!isset($_SESSION['valid'])) {
 	header('Location: login.php');
 }
 ?>
 
 <?php
-// including the database connection file
+// Incluyendo archivo de conexión
 include_once("connection.php");
 
-if(isset($_POST['update']))
-{	
+if (isset($_POST['update'])) {	
 	$id = $_POST['id'];
-	
 	$name = $_POST['name'];
 	$qty = $_POST['qty'];
 	$price = $_POST['price'];	
-	
-	// checking empty fields
-	if(empty($name) || empty($qty) || empty($price)) {
-				
-		if(empty($name)) {
-			echo "<font color='red'>Name field is empty.</font><br/>";
+
+	// Validación de campos vacíos
+	if (empty($name) || empty($qty) || empty($price)) {
+
+		if (empty($name)) {
+			echo "<font color='red'>El campo Nombre está vacío.</font><br/>";
 		}
-		
-		if(empty($qty)) {
-			echo "<font color='red'>Quantity field is empty.</font><br/>";
+		if (empty($qty)) {
+			echo "<font color='red'>El campo Cantidad está vacío.</font><br/>";
 		}
-		
-		if(empty($price)) {
-			echo "<font color='red'>Price field is empty.</font><br/>";
+		if (empty($price)) {
+			echo "<font color='red'>El campo Precio está vacío.</font><br/>";
 		}		
-	} else {	
-		//updating the table
-		$result = mysqli_query($mysqli, "UPDATE products SET name='$name', qty='$qty', price='$price' WHERE id=$id");
-		
-		//redirectig to the display page. In our case, it is view.php
+
+	} else {
+		// Actualizar base de datos
+		$result = mysqli_query($conn, "UPDATE products 
+			SET name='$name', qty='$qty', price='$price' 
+			WHERE id=$id");
+
+		// Redirigir a la vista
 		header("Location: view.php");
 	}
 }
 ?>
+
 <?php
-//getting id from url
+// Obtener ID desde la URL
 $id = $_GET['id'];
 
-//selecting data associated with this particular id
-$result = mysqli_query($mysqli, "SELECT * FROM products WHERE id=$id");
+// Consultar producto por ID
+$result = mysqli_query($conn, "SELECT * FROM products WHERE id=$id");
 
-while($res = mysqli_fetch_array($result))
-{
+while ($res = mysqli_fetch_array($result)) {
 	$name = $res['name'];
 	$qty = $res['qty'];
 	$price = $res['price'];
 }
 ?>
+
 <html>
 <head>	
-	<title>Edit Data</title>
+	<title>Editar Producto</title>
 </head>
 
 <body>
-	<a href="index.php">Home</a> | <a href="view.php">View Products</a> | <a href="logout.php">Logout</a>
+	<a href="index.php">Inicio</a> | <a href="view.php">Ver Productos</a> | <a href="logout.php">Cerrar sesión</a>
 	<br/><br/>
 	
 	<form name="form1" method="post" action="edit.php">
 		<table border="0">
 			<tr> 
-				<td>Name</td>
-				<td><input type="text" name="name" value="<?php echo $name;?>"></td>
+				<td>Nombre</td>
+				<td><input type="text" name="name" value="<?php echo $name; ?>"></td>
 			</tr>
 			<tr> 
-				<td>Quantity</td>
-				<td><input type="text" name="qty" value="<?php echo $qty;?>"></td>
+				<td>Cantidad</td>
+				<td><input type="text" name="qty" value="<?php echo $qty; ?>"></td>
 			</tr>
 			<tr> 
-				<td>Price</td>
-				<td><input type="text" name="price" value="<?php echo $price;?>"></td>
+				<td>Precio</td>
+				<td><input type="text" name="price" value="<?php echo $price; ?>"></td>
 			</tr>
 			<tr>
-				<td><input type="hidden" name="id" value=<?php echo $_GET['id'];?>></td>
-				<td><input type="submit" name="update" value="Update"></td>
+				<td><input type="hidden" name="id" value="<?php echo $id; ?>"></td>
+				<td><input type="submit" name="update" value="Actualizar"></td>
 			</tr>
 		</table>
 	</form>

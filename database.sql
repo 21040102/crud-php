@@ -1,4 +1,5 @@
-create database `test2`;
+-- create database `test2`;
+
 
 use `test2`;
 
