@@ -1,8 +1,8 @@
 <?php
 $host = 'mysql.railway.internal';
-$user = 'root'; // ← Aquí estaba mal, tú pusiste 'raíz'
-$password = 'sJmqBEkdSNzjfzxwxuGwIwjLuJmTdSsB';
-$db = 'ferrocarril';
+$user = 'root';
+$password = 'sJmqBEkdSNzjzfxwxuGwIwjluJmTdSsB';
+$db = 'railway'; // o 'ferrocarril' si cambiaste el nombre
 
 $conn = mysqli_connect($host, $user, $password, $db);
 
